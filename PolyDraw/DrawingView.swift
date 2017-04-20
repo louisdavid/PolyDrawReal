@@ -60,11 +60,17 @@ class DrawingView: UIView {
                                             Y: Double(topLeftPoint.y),
                                             theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
                                             theWidth: abs(Double(self.initialPoint.x-newPoint.x)))
-            } else {
+            } else if shapeType == 1 {
                 self.thePartialShape = Oval(X: Double(topLeftPoint.x),
                                             Y: Double(topLeftPoint.y),
                                             theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
                                             theWidth: abs(Double(self.initialPoint.x-newPoint.x)))
+            } else if shapeType == 2 {
+                self.thePartialShape = Line(X: Double(self.initialPoint.x),
+                                            Y: Double(self.initialPoint.y),
+                                            theHeight: Double(self.initialPoint.x) - Double(newPoint.x),
+                                            theWidth:  Double(self.initialPoint.y) - Double(newPoint.y))
+
             }
         }
         self.setNeedsDisplay()

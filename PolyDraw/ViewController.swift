@@ -8,24 +8,39 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, OptionsSavable {
 
-    @IBAction func shapeChosen(_ sender: UISegmentedControl) {
-        self.drawingView.shapeType = sender.selectedSegmentIndex
-    }
-    
+    var options = Options(lineWidth: 1, lineColor: 0, filled: true, fillColor: 0)
     @IBOutlet weak var drawingView: DrawingView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
 
+//Segeu
+extension ViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let theNextViewController = segue.destination as! OptionsViewController
+        theNextViewController.shape = drawingView.shapeType
+        theNextViewController.options = options
+        theNextViewController.myParent = self
+    }
+}
+
+//SegmentedIndex Functions
+extension ViewController {
+    @IBAction func shapeChosen(_ sender: UISegmentedControl) {
+        self.drawingView.shapeType = sender.selectedSegmentIndex
+    }
+}
+
+//OptionsSavable function
+extension ViewController {
+    func saveOptions(options:Options){
+        self.options = options
+    }
+}
