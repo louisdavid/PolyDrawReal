@@ -17,12 +17,23 @@ class Oval:Shape {
         self.theWidth = theWidth
         super.init(X: X, Y: Y)
     }
+    init(X:Double, Y:Double, theHeight:Double, theWidth:Double, options:Options) {
+        self.theHeight = theHeight
+        self.theWidth = theWidth
+        super.init(X: X, Y: Y, options: options)
+    }
     
     override func draw(_ theContext: CGContext) {
         let rect = CGRect(x: self.X, y: self.Y, width: self.theWidth, height: self.theHeight)
+        fillOptionsInContext(context: theContext)
         theContext.addEllipse(in: rect)
+        theContext.fillPath()
+        theContext.addEllipse(in: rect)
+        theContext.strokePath()
+        
     }
 }
+
 
 
 

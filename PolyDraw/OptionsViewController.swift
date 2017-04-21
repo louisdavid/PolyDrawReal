@@ -11,9 +11,10 @@ import UIKit
 class OptionsViewController: UIViewController {
     
     //Pre View Data
-    var options = Options(lineWidth: 1, lineColor: 0, filled: true, fillColor: 0)
+    var options = Options()
     var shape:Int = 0
     var myParent:OptionsSavable!
+    var previewPaneView: PreviewPaneView!
     
     //Variables
     @IBOutlet weak var lineWidth: UISlider!
@@ -26,16 +27,16 @@ class OptionsViewController: UIViewController {
         super.viewDidLoad()
         
         //Set up options
-        lineWidth.value = options.lineWidth
-        lineColor.selectedSegmentIndex = options.lineColor
-        if(options.filled){
-            fillColor.selectedSegmentIndex = options.fillColor
-        }else{
-            fillColor.isEnabled = false
-        }
-        filled.isOn = options.filled
-
-        // Do any additional setup after loading the view.
+        self.lineWidth.value = options.lineWidth
+        self.lineColor.selectedSegmentIndex = options.lineColor
+        self.fillColor.selectedSegmentIndex = options.fillColor
+        self.fillColor.isEnabled = options.filled
+        self.filled.isOn = options.filled
+        
+        //Preview Pane set up
+        self.previewPaneView.shapeType = self.shape
+        self.previewPaneView.options = self.options
+        self.previewPane.setNeedsDisplay()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,11 +50,11 @@ class OptionsViewController: UIViewController {
 //Bar Button Functions
 extension OptionsViewController{
     @IBAction func save(_ sender: UIBarButtonItem) {
-        options.lineWidth = lineWidth.value
-        options.lineColor = lineColor.selectedSegmentIndex
-        options.filled = filled.isOn
-        options.fillColor = fillColor.selectedSegmentIndex
-        myParent.saveOptions(options: self.options)
+        self.options.lineWidth = self.lineWidth.value
+        self.options.lineColor = self.lineColor.selectedSegmentIndex
+        self.options.filled = self.filled.isOn
+        self.options.fillColor = self.fillColor.selectedSegmentIndex
+        self.myParent.saveOptions(options: self.options)
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -64,6 +65,9 @@ extension OptionsViewController{
 //Slider Functions
 extension OptionsViewController {
     @IBAction func lineWidthChanged(_ sender: UISlider) {
+        self.options.lineWidth = self.lineWidth.value
+        self.previewPaneView.options = self.options
+        self.previewPane.setNeedsDisplay()
     }
 }
 
@@ -75,14 +79,23 @@ extension OptionsViewController {
         }else{
             fillColor.isEnabled = false
         }
+        self.options.filled = self.filled.isOn
+        self.previewPaneView.options = self.options
+        self.previewPane.setNeedsDisplay()
     }
 }
 
 //Segmented Control functions
 extension OptionsViewController {
     @IBAction func lineColorChanged(_ sender: UISegmentedControl) {
+        self.options.lineColor = self.lineColor.selectedSegmentIndex
+        self.previewPaneView.options = self.options
+        self.previewPane.setNeedsDisplay()
     }
     @IBAction func fillColorChanged(_ sender: UISegmentedControl) {
+        self.options.fillColor = self.fillColor.selectedSegmentIndex
+        self.previewPaneView.options = self.options
+        self.previewPane.setNeedsDisplay()
     }
 }
 

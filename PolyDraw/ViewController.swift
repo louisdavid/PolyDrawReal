@@ -10,18 +10,23 @@ import UIKit
 
 class ViewController: UIViewController, OptionsSavable {
 
-    var options = Options(lineWidth: 1, lineColor: 0, filled: true, fillColor: 0)
+    var options = Options()
     @IBOutlet weak var drawingView: DrawingView!
+    @IBOutlet weak var undoBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        //if options were saved previously
+        // options = saved options
+        self.drawingView.options = options
+        undoBtn.isEnabled = false
+        self.drawingView.undoBtn = undoBtn
     }
-
 }
 
-//Segeu
+//Segue
 extension ViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let theNextViewController = segue.destination as! OptionsViewController
@@ -42,5 +47,18 @@ extension ViewController {
 extension ViewController {
     func saveOptions(options:Options){
         self.options = options
+        self.drawingView.options = options
+    }
+}
+
+//Button Functions
+extension ViewController {
+    @IBAction func undo(_ sender: UIBarButtonItem) {
+        if let _ = self.drawingView.theShapes.popLast(){
+            if self.drawingView.theShapes.isEmpty {
+                undoBtn.isEnabled = false
+            }
+            self.drawingView.setNeedsDisplay()
+        }
     }
 }

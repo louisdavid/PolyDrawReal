@@ -15,6 +15,8 @@ class DrawingView: UIView {
     var initialPoint: CGPoint!
     var isThereAPartialShape : Bool = false
     var thePartialShape : Shape!
+    var options = Options() //gets initialized by the ViewController
+    var undoBtn = UIBarButtonItem()
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -22,12 +24,6 @@ class DrawingView: UIView {
         let possibleContext = UIGraphicsGetCurrentContext()
         
         if let theContext = possibleContext {
-            theContext.setLineWidth(1.0)
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let components:[CGFloat] = [0.0, 0.0, 1.0, 1.0]
-            let color = CGColor(colorSpace: colorSpace, components: components)
-            theContext.setStrokeColor(color!)
-            
             for aShape in self.theShapes {
                 aShape.draw(theContext)
             }
@@ -35,8 +31,6 @@ class DrawingView: UIView {
             if self.isThereAPartialShape {
                 self.thePartialShape.draw(theContext)
             }
-            
-            theContext.strokePath()
         }
     }
     
@@ -59,17 +53,20 @@ class DrawingView: UIView {
                 self.thePartialShape = Rect(X: Double(topLeftPoint.x),
                                             Y: Double(topLeftPoint.y),
                                             theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
-                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)))
+                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
+                                            options: Options(options))
             } else if shapeType == 1 {
                 self.thePartialShape = Oval(X: Double(topLeftPoint.x),
                                             Y: Double(topLeftPoint.y),
                                             theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
-                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)))
+                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
+                                            options: Options(options))
             } else if shapeType == 2 {
                 self.thePartialShape = Line(X: Double(self.initialPoint.x),
                                             Y: Double(self.initialPoint.y),
-                                            theHeight: Double(self.initialPoint.x) - Double(newPoint.x),
-                                            theWidth:  Double(self.initialPoint.y) - Double(newPoint.y))
+                                            theHeight: Double(newPoint.y),
+                                            theWidth: Double(newPoint.x),
+                                            options: Options(options))
 
             }
         }
@@ -79,6 +76,8 @@ class DrawingView: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let theShape = self.thePartialShape {
             self.theShapes.append(theShape)
+            undoBtn.isEnabled = true
+            
         }
         self.isThereAPartialShape = false
     }
