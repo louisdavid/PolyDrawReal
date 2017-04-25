@@ -1,4 +1,3 @@
-//
 //  PreviewPaneView.swift
 //  PolyDraw
 //
@@ -11,30 +10,26 @@ import UIKit
 class PreviewPaneView: UIView {
     var shapeType = 0
     var options = Options()
+    var width = 0.0
+    var height = 0.0
+    let padding = 20.0
     
     override func draw(_ rect: CGRect) {
+        self.width = Double(self.bounds.width)
+        self.height = Double(self.bounds.height)
+        var theShape:Shape
         
-        if shapeType == 0 {
-            self.thePartialShape = Rect(X: 40,
-                                        Y: 40,
-                                        theHeight: 40),
-                                        theWidth: 40),
-                                        options: Options(options))
-        } else if shapeType == 1 {
-            self.thePartialShape = Oval(X: 40,
-                                        Y: 40,
-                                        theHeight: 40),
-            theWidth: 40),
-            options: Options(options))
-        } else if shapeType == 2 {
-            self.thePartialShape = Line(X: 40,
-                                        Y: 40,
-                                        theHeight: 40),
-            theWidth: 40),
-            options: Options(options))
-            
+        switch shapeType {
+        case 0: theShape = Rect(X: padding, Y: padding, theHeight: height - padding - padding, theWidth: width - padding - padding, options: Options(options))
+            break
+        case 1: theShape = Oval(X: padding, Y: padding, theHeight: height - padding - padding, theWidth: width - padding - padding, options: Options(options))
+            break
+        case 2: theShape = Line(X: padding, Y: padding, theHeight: height - padding, theWidth: width - padding, options: Options(options))
+            break
+        default: theShape = Rect(X: padding, Y: padding, theHeight: height - padding - padding, theWidth: width - padding - padding, options: Options(options))
+            break
         }
-    }
-
+        let context = UIGraphicsGetCurrentContext()
+        theShape.draw(context!)
     }
 }

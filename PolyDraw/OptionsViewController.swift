@@ -14,14 +14,13 @@ class OptionsViewController: UIViewController {
     var options = Options()
     var shape:Int = 0
     var myParent:OptionsSavable!
-    var previewPaneView: PreviewPaneView!
     
     //Variables
     @IBOutlet weak var lineWidth: UISlider!
     @IBOutlet weak var lineColor: UISegmentedControl!
     @IBOutlet weak var filled: UISwitch!
     @IBOutlet weak var fillColor: UISegmentedControl!
-    @IBOutlet weak var previewPane: UIView!
+    @IBOutlet weak var previewPaneView: PreviewPaneView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +35,7 @@ class OptionsViewController: UIViewController {
         //Preview Pane set up
         self.previewPaneView.shapeType = self.shape
         self.previewPaneView.options = self.options
-        self.previewPane.setNeedsDisplay()
+        self.previewPaneView.setNeedsDisplay()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,7 +66,7 @@ extension OptionsViewController {
     @IBAction func lineWidthChanged(_ sender: UISlider) {
         self.options.lineWidth = self.lineWidth.value
         self.previewPaneView.options = self.options
-        self.previewPane.setNeedsDisplay()
+        self.previewPaneView.setNeedsDisplay()
     }
 }
 
@@ -81,7 +80,7 @@ extension OptionsViewController {
         }
         self.options.filled = self.filled.isOn
         self.previewPaneView.options = self.options
-        self.previewPane.setNeedsDisplay()
+        self.previewPaneView.setNeedsDisplay()
     }
 }
 
@@ -90,12 +89,12 @@ extension OptionsViewController {
     @IBAction func lineColorChanged(_ sender: UISegmentedControl) {
         self.options.lineColor = self.lineColor.selectedSegmentIndex
         self.previewPaneView.options = self.options
-        self.previewPane.setNeedsDisplay()
+        self.previewPaneView.setNeedsDisplay()
     }
     @IBAction func fillColorChanged(_ sender: UISegmentedControl) {
         self.options.fillColor = self.fillColor.selectedSegmentIndex
         self.previewPaneView.options = self.options
-        self.previewPane.setNeedsDisplay()
+        self.previewPaneView.setNeedsDisplay()
     }
 }
 

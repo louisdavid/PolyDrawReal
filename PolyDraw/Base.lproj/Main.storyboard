@@ -28,7 +28,7 @@
                                 <items>
                                     <barButtonItem style="plain" id="3L0-Tl-fyc">
                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="rA5-Hl-Fjz">
-                                            <rect key="frame" x="16" y="7" width="128" height="31"/>
+                                            <rect key="frame" x="16" y="6.5" width="128" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
                                                 <segment title="Rect"/>
@@ -218,7 +218,7 @@
                         <outlet property="filled" destination="Zui-Xe-fS9" id="9sQ-cn-ppM"/>
                         <outlet property="lineColor" destination="DX3-Iv-xkM" id="NCW-TX-4lY"/>
                         <outlet property="lineWidth" destination="16J-Vt-ZIr" id="MK3-v5-MYK"/>
-                        <outlet property="previewPane" destination="5q7-06-p0J" id="gyP-5a-Lsr"/>
+                        <outlet property="previewPaneView" destination="5q7-06-p0J" id="vnf-7T-xYE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2xb-Zs-rqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
