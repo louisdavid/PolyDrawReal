@@ -28,12 +28,13 @@
                                 <items>
                                     <barButtonItem style="plain" id="3L0-Tl-fyc">
                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="rA5-Hl-Fjz">
-                                            <rect key="frame" x="16" y="6.5" width="128" height="31"/>
+                                            <rect key="frame" x="16" y="7" width="192" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
                                                 <segment title="Rect"/>
                                                 <segment title="Oval"/>
                                                 <segment title="Line"/>
+                                                <segment title="Multi-L"/>
                                             </segments>
                                             <connections>
                                                 <action selector="shapeChosen:" destination="BYZ-38-t0r" eventType="valueChanged" id="3gj-7N-dUs"/>

@@ -40,6 +40,7 @@ extension ViewController {
 extension ViewController {
     @IBAction func shapeChosen(_ sender: UISegmentedControl) {
         self.drawingView.shapeType = sender.selectedSegmentIndex
+        self.drawingView.isThereAPartialShape = false
     }
 }
 

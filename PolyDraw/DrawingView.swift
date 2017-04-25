@@ -35,9 +35,11 @@ class DrawingView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first! as UITouch
-        self.initialPoint = touch.location(in: self)
-        self.isThereAPartialShape = true
+        if !self.isThereAPartialShape {
+            let touch = touches.first! as UITouch
+            self.initialPoint = touch.location(in: self)
+            self.isThereAPartialShape = true
+        }
         
     }
     
@@ -49,25 +51,31 @@ class DrawingView: UIView {
                                    y: self.initialPoint.y < newPoint.y ? self.initialPoint.y : newPoint.y)
         
         if self.isThereAPartialShape {
-            if shapeType == 0 {
-                self.thePartialShape = Rect(X: Double(topLeftPoint.x),
-                                            Y: Double(topLeftPoint.y),
-                                            theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
-                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
-                                            options: Options(options))
-            } else if shapeType == 1 {
-                self.thePartialShape = Oval(X: Double(topLeftPoint.x),
-                                            Y: Double(topLeftPoint.y),
-                                            theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
-                                            theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
-                                            options: Options(options))
-            } else if shapeType == 2 {
-                self.thePartialShape = Line(X: Double(self.initialPoint.x),
-                                            Y: Double(self.initialPoint.y),
-                                            theHeight: Double(newPoint.y),
-                                            theWidth: Double(newPoint.x),
-                                            options: Options(options))
-
+            switch(shapeType){
+            case 0: self.thePartialShape = Rect(X: Double(topLeftPoint.x),
+                                                Y: Double(topLeftPoint.y),
+                                                theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
+                                                theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
+                                                options: Options(options))
+                break
+            case 1: self.thePartialShape = Oval(X: Double(topLeftPoint.x),
+                                                Y: Double(topLeftPoint.y),
+                                                theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
+                                                theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
+                                                options: Options(options))
+                break
+            case 2,3: self.thePartialShape = Line(X: Double(self.initialPoint.x),
+                                                Y: Double(self.initialPoint.y),
+                                                theHeight: Double(newPoint.y),
+                                                theWidth: Double(newPoint.x),
+                                                options: Options(options))
+                break
+            default: self.thePartialShape = Rect(X: Double(topLeftPoint.x),
+                                                 Y: Double(topLeftPoint.y),
+                                                 theHeight: abs(Double(self.initialPoint.y-newPoint.y)),
+                                                 theWidth: abs(Double(self.initialPoint.x-newPoint.x)),
+                                                 options: Options(options))
+                break
             }
         }
         self.setNeedsDisplay()
@@ -75,11 +83,25 @@ class DrawingView: UIView {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let theShape = self.thePartialShape {
-            self.theShapes.append(theShape)
-            undoBtn.isEnabled = true
+            let touch = touches.first! as UITouch
+            let newPoint = touch.location(in: self)
             
+            undoBtn.isEnabled = true
+            self.theShapes.append(theShape)
+            if(shapeType != 3){
+                self.isThereAPartialShape = false
+            }else {
+                self.thePartialShape = Line(X: Double(newPoint.x),
+                                            Y: Double(newPoint.y),
+                                            theHeight: Double(newPoint.y),
+                                            theWidth: Double(newPoint.x),
+                                            options: Options(options))
+                self.initialPoint.x = newPoint.x
+                self.initialPoint.y = newPoint.y
+            }
+        }else{
+            self.isThereAPartialShape = false
         }
-        self.isThereAPartialShape = false
     }
 }
 

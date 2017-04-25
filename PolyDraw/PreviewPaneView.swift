@@ -24,7 +24,7 @@ class PreviewPaneView: UIView {
             break
         case 1: theShape = Oval(X: padding, Y: padding, theHeight: height - padding - padding, theWidth: width - padding - padding, options: Options(options))
             break
-        case 2: theShape = Line(X: padding, Y: padding, theHeight: height - padding, theWidth: width - padding, options: Options(options))
+        case 2,3: theShape = Line(X: padding, Y: padding, theHeight: height - padding, theWidth: width - padding, options: Options(options))
             break
         default: theShape = Rect(X: padding, Y: padding, theHeight: height - padding - padding, theWidth: width - padding - padding, options: Options(options))
             break

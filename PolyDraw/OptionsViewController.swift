@@ -34,7 +34,7 @@ class OptionsViewController: UIViewController {
         
         //Preview Pane set up
         self.previewPaneView.shapeType = self.shape
-        self.previewPaneView.options = self.options
+        self.previewPaneView.options = Options(self.options)
         self.previewPaneView.setNeedsDisplay()
     }
 
@@ -64,8 +64,7 @@ extension OptionsViewController{
 //Slider Functions
 extension OptionsViewController {
     @IBAction func lineWidthChanged(_ sender: UISlider) {
-        self.options.lineWidth = self.lineWidth.value
-        self.previewPaneView.options = self.options
+        self.previewPaneView.options.lineWidth = self.lineWidth.value
         self.previewPaneView.setNeedsDisplay()
     }
 }
@@ -78,8 +77,7 @@ extension OptionsViewController {
         }else{
             fillColor.isEnabled = false
         }
-        self.options.filled = self.filled.isOn
-        self.previewPaneView.options = self.options
+        self.previewPaneView.options.filled = self.filled.isOn
         self.previewPaneView.setNeedsDisplay()
     }
 }
@@ -87,13 +85,11 @@ extension OptionsViewController {
 //Segmented Control functions
 extension OptionsViewController {
     @IBAction func lineColorChanged(_ sender: UISegmentedControl) {
-        self.options.lineColor = self.lineColor.selectedSegmentIndex
-        self.previewPaneView.options = self.options
+        self.previewPaneView.options.lineColor = self.lineColor.selectedSegmentIndex
         self.previewPaneView.setNeedsDisplay()
     }
     @IBAction func fillColorChanged(_ sender: UISegmentedControl) {
-        self.options.fillColor = self.fillColor.selectedSegmentIndex
-        self.previewPaneView.options = self.options
+        self.previewPaneView.options.fillColor = self.fillColor.selectedSegmentIndex
         self.previewPaneView.setNeedsDisplay()
     }
 }
